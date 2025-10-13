@@ -1,0 +1,17 @@
+<section class="dashboard">
+    <h2>Meine Haustiere</h2>
+    <div class="pet-gtid">
+        @for(pet of pets; track pet.id) {
+            <app-pet-card
+                [pet]="pet"
+                (click)="openPet(pet)"></app-pet-card>
+        }
+    </div>
+    <button 
+        matFab 
+        color="primary"
+        class="add-btn"
+        (click)="addPet()">
+        <mat-icon>add</mat-icon>
+    </button>
+</section>

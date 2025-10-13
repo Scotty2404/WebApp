@@ -1,12 +1,15 @@
 <header>
-  <h1>Meine App</h1>
-  <nav>
-    <a routerLink="/dashboard">Dashboard</a>
-    <a routerLink="/calendar">Calendar</a>
-    <a routerLink="/settings">Settings</a>
-  </nav>
+  <app-header
+    [pageTitle]="pageTitle"
+    [pageSubtitle]="pageSubTitle"
+    [returnLink]="returnLink"
+  ></app-header>
 </header>
 
 <main>
   <router-outlet></router-outlet>
 </main>
+
+<footer>
+  <app-navbar></app-navbar>
+</footer>

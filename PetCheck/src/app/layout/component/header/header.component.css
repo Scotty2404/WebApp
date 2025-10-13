@@ -1,0 +1,13 @@
+.spacer {
+    flex: 1 1 auto;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    z-index: 1000;
+    background-color: gray;
+}

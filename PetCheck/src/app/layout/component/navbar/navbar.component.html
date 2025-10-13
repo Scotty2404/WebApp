@@ -1,0 +1,23 @@
+<mat-toolbar
+    color="primary"
+    class="bottom-nav"
+    fxLayoutAlign="space-around center">
+    <button 
+        matIconButton
+        [routerLink]="['/dashboard']"
+        routerLinkActive="active">
+        <mat-icon>dashboard</mat-icon>
+    </button>
+    <button 
+        matIconButton
+        [routerLink]="['/calendar']"
+        routerLinkActive="active">
+        <mat-icon>calendar_today</mat-icon>
+    </button>
+    <button 
+        matIconButton
+        [routerLink]="['/settings']"
+        routerLinkActive="active">
+        <mat-icon>settings</mat-icon>
+    </button>
+</mat-toolbar>
