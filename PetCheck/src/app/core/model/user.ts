@@ -1,8 +1,7 @@
 import { Pet } from "./pet";
 
 export interface User {
-    id: number;
+    id: string;
     name: string;
-    pets: Pet[];
     pushToken?: string;
 }
