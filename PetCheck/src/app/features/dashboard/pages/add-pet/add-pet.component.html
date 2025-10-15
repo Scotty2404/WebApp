@@ -1,1 +1,23 @@
-<p>add-pet works!</p>
+<form [formGroup]="petForm" (ngSubmit)="onSubmit()">
+  <div>
+    <label>Name:</label>
+    <input formControlName="name" type="text" />
+  </div>
+
+  <div>
+    <label>Species:</label>
+    <input formControlName="species" type="text" />
+  </div>
+
+  <div>
+    <label>Breed:</label>
+    <input formControlName="breed" type="text" />
+  </div>
+
+  <div>
+    <label>Birth Date:</label>
+    <input formControlName="birthDate" type="date" />
+  </div>
+
+  <button type="submit" [disabled]="petForm.invalid">Add Pet</button>
+</form>

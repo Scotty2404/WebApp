@@ -30,6 +30,7 @@ export class PetEffects {
             ofType(PetActions.addPet),
             mergeMap(({ userId, pet }) => {
                 const petCollection = collection(this.firestore, `users/${userId}/pets`);
+                console.log('Payload: ', pet, userId);
                 return from(addDoc(petCollection, { ...pet, ownerId: userId })).pipe(
                     map(docRef => 
                         PetActions.addPetSucess({ pet: { ...pet, id: docRef.id, ownerId: userId } })
