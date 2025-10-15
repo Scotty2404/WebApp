@@ -8,6 +8,13 @@ import { provideEffects } from '@ngrx/effects';
 
 import {  initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore, enableIndexedDbPersistence } from '@angular/fire/firestore';
+import { authReducer } from './core/store/auth/auth.reducer';
+import { petReducer } from './core/store/pets/pets.reducer';
+import { userReducer } from './core/store/user/user.reducer';
+import { AuthEffects } from './core/store/auth/auth.effects';
+import { PetEffects } from './core/store/pets/pets.effects';
+import { UserEffects } from './core/store/user/user.effects';
+import { getAuth, provideAuth } from '@angular/fire/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLb6gK4thvmfCdEvaOqaxNrlo-ruOZV9o",
@@ -26,9 +33,14 @@ export const appConfig: ApplicationConfig = {
         enabled: !isDevMode(),
         registrationStrategy: 'registerWhenStable:30000'
     }), 
-    provideStore(), 
-    provideEffects(),
+    provideStore({
+      auth: authReducer,
+      pets: petReducer,
+      users: userReducer,
+    }), 
+    provideEffects([AuthEffects, PetEffects, UserEffects]),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
+    provideAuth(() => getAuth()),
     provideFirestore(() => {
       const firestore = getFirestore();
       enableIndexedDbPersistence(firestore).catch(err => {

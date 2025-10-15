@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Auth, signInWithEmailAndPassword, authState, createUserWithEmailAndPassword, signOut } from '@angular/fire/auth'
 import { Firestore, docData, setDoc, doc } from "@angular/fire/firestore";
 import { AuthActions } from "./auth.actions";
-import { mergeMap, switchMap, from, catchError, of, map, tap } from "rxjs";
+import { mergeMap, switchMap, from, catchError, of, map, tap, take } from "rxjs";
 import { User } from "../../model/user";
 
 @Injectable()
@@ -20,15 +20,21 @@ export class AuthEffects {
                     switchMap(({ user }) => {
                         const userDoc = doc(this.firestore, `users/${user.uid}`);
                         return docData(userDoc, { idField: 'id' }).pipe(
-                            map(fireUser => AuthActions.loginSucess({ user: fireUser as User})),
-                            catchError(() => {
-                                const newUser: User = { id: user.uid, name: user.email ?? '', email: user.email ?? ''};
-                                setDoc(userDoc, newUser);
-                                return of(AuthActions.loginSucess({ user: newUser }));
-                            })
+                            take(1),
+                            map(fireUser =>  {
+                                if (fireUser) return AuthActions.loginSucess({ user: fireUser as User});
+                                else {
+                                    const newUser:User = { id: user.uid, name: user.displayName ?? '', email: user.email ?? ''};
+                                    setDoc(userDoc, newUser);
+                                    return AuthActions.loginSucess({ user: newUser });
+                                }
+                        })
                         );
                     }),
-                    catchError(error => of(AuthActions.loginFailure({ error })))
+                    catchError(error => {
+                        console.error('[AuthEffect] Login Error:', error);
+                        return of(AuthActions.loginFailure({ error }))
+                    })
                 )
             )
         )
@@ -73,7 +79,11 @@ export class AuthEffects {
                 if(!user) return of(AuthActions.authStateChanged({ user: null }));
                 const userDoc = doc(this.firestore, `users/${user.uid}`);
                 return docData(userDoc, { idField: 'id' }).pipe(
-                    map(u => AuthActions.authStateChanged({ user: u as User}))
+                    map(u => AuthActions.authStateChanged({ user: u as User})),
+                    catchError(error => {
+                        console.error('[AuthEffect] Error loading userDoc: ', error);
+                        return of(AuthActions.authStateChanged({ user: null }));
+                    })
                 );
             })
         )

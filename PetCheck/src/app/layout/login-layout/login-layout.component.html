@@ -1,0 +1,123 @@
+<div class="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-900">
+  <div class="w-full max-w-sm bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8">
+
+    <!-- Header -->
+    <h1 class="text-2xl font-semibold text-center mb-6 text-gray-800 dark:text-gray-100">
+      Willkommen zurück👋 {{ user$ | async }}
+    </h1>
+
+    <!-- Offline Hinweis -->
+     @if (!isOnline)
+     {
+        <div
+        class="mb-4 rounded-lg bg-yellow-100 text-yellow-800 text-sm px-3 py-2 text-center"
+        >
+        Du bist offline – Login nicht möglich.
+        </div>
+     }
+
+    <!-- Login-Form -->
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" novalidate>
+      @if(registrate)
+      {
+        <!-- Name -->
+        <div class="mb-4">
+          <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+            Name
+          </label>
+          <input
+            id="name"
+            type="string"
+            formControlName="name"
+            class="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="name"
+          />
+        </div>
+      }
+
+
+      <!-- Email -->
+      <div class="mb-4">
+        <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+          E-Mail
+        </label>
+        <input
+          id="email"
+          type="email"
+          formControlName="email"
+          class="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="du@example.com"
+          [class.border-red-500]="loginForm.controls['email'].invalid && loginForm.controls['email'].touched"
+        />
+        @if (loginForm.controls['email'].invalid && loginForm.controls['email'].touched) 
+        {
+            <small  class="text-red-500 text-xs">
+            Bitte gib eine gültige E-Mail ein.
+            </small>
+        }
+      </div>
+
+      <!-- Passwort -->
+      <div class="mb-6">
+        <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-200">
+          Passwort
+        </label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="mt-1 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-700 px-3 py-2 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="••••••••"
+          [class.border-red-500]="loginForm.controls['password'].invalid && loginForm.controls['password'].touched"
+        />
+        @if (loginForm.controls['password'].invalid && loginForm.controls['password'].touched) 
+        {
+            <small class="text-red-500 text-xs">
+            Passwort erforderlich.
+            </small>
+        }
+
+      </div>
+
+      <!-- Login Button -->
+      <button
+        type="submit"
+        [disabled]="loginForm.invalid || (loading$ | async) || !isOnline"
+        class="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-semibold py-2 rounded-lg transition"
+      >
+        @if(!(loading$ | async))
+        {
+            <span>Anmelden</span>
+        }
+        @if(loading$ | async) 
+        {
+            <span class="flex items-center justify-center">
+            <svg class="animate-spin mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+            </svg>
+            Lädt...
+            </span>
+        }
+
+      </button>
+    </form>
+
+    <!-- Error Message -->
+
+        <div class="mt-4 text-red-500 text-center text-sm">
+        {{ error$ | async }}
+        </div>
+
+
+
+    <!-- Registrierung-Link -->
+    <div class="mt-6 text-center">
+      <p class="text-sm text-gray-600 dark:text-gray-400">
+        Noch kein Konto?
+        <button (click)="this.registrate = !registrate">Registrieren</button>
+      </p>
+    </div>
+
+  </div>
+</div>

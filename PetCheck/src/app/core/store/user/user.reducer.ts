@@ -17,7 +17,7 @@ export const initialState: UserState = {
     error: null,
 };
 
-export const UserReducer = createReducer(
+export const userReducer = createReducer(
     initialState,
 
     //LoadSingleUser

@@ -7,7 +7,7 @@ export const AuthActions = createActionGroup({
         //Login
         'Login': props<{ email: string; password: string }>(),
         'Login Sucess': props<{ user: User }>(),
-        'Login Failure': props<{ error: any }>(),
+        'Login Failure': props<{ error: string }>(),
 
         //Logout
         'Logout': emptyProps(),

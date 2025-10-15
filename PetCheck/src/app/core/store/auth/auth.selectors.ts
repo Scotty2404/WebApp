@@ -3,6 +3,7 @@ import { AuthState } from "./auth.reducer";
 
 export const selectAuthState = createFeatureSelector<AuthState>('auth');
 
-export const selectAuthUser = createSelector(selectAuthState, s => s.user);
-export const selectIsAuthenticated = createSelector(selectAuthState, s => s.isAuthenticated);
-export const selectAuthLoading = createSelector(selectAuthState, s => s.loading);
+export const selectAuthUser = createSelector(selectAuthState, (auth: AuthState) => auth.user);
+export const selectIsAuthenticated = createSelector(selectAuthState, (auth: AuthState) => auth.isAuthenticated);
+export const selectAuthLoading = createSelector(selectAuthState, (auth: AuthState) => auth.loading);
+export const selectAuthError = createSelector(selectAuthState, (auth: AuthState) => auth.error);
