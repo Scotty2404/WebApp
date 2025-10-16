@@ -11,8 +11,5 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
-  @Input() pageTitle: string = '';
-  @Input() pageSubtitle: string = '';
-  @Input() returnLink: string = '';
-
+  @Input() pageTitle: string | null = '';
 }

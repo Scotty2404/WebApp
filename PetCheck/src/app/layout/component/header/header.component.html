@@ -2,25 +2,12 @@
     class="header"
     color="primary"
     fxLayoutAlign="space-around center">
-    <mat-toolbar-row>
-        <span><strong>{{pageTitle}}</strong></span>
+        <span><strong>{{ pageTitle }}</strong></span>
         <span class="spacer"></span>
-        @if(returnLink){
-            <button 
-                matIconButton
-                [routerLink]="returnLink"
-                routerLinkActive="active">
-                <mat-icon>chevron_left</mat-icon>
-            </button>
-        }
         <button 
             matIconButton
             [routerLink]="['/settings']"
             routerLinkActive="active">
             <mat-icon>settings</mat-icon>
         </button>
-    </mat-toolbar-row>
-    <mat-toolbar-row>
-        <span>{{pageSubtitle}}</span>
-    </mat-toolbar-row>
 </mat-toolbar>

@@ -1,12 +1,19 @@
-<section class="pet-detail">
-    <h2>{{ pet?.name }}</h2>
-    <div class="info">
-        <p>Spezies: {{ pet.species }}</p>
-        <p>Rasse: {{ pet.breed }}</p>
-        <p>Geburtstag: {{ pet.birthDate }}</p>
-    </div>
+@if(pet$ | async; as pet) {
+    <section class="pet-detail">
+        <app-title
+            [pageTitle]="pet.name || 'Details'"
+            routerLink="/dashboard">
+        </app-title>
+        <mat-divider></mat-divider>
+        <div class="info">
+            <p>Spezies: {{ pet.species }}</p>
+            <p>Rasse: {{ pet.breed }}</p>
+            <p>Geburtstag: {{ pet.birthDate.toDate()| date }}</p>
+        </div>
 
-    <div>
-        <!-- termine component, weight component, vaccine component, diagnosis component, other(notizen)-->
-    </div>
-</section>
+        <div class="detailed-information">
+            <!-- termine component, weight component, vaccine component, diagnosis component, other(notizen)-->
+        </div>
+    </section>    
+}
+

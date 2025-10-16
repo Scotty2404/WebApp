@@ -1,0 +1,10 @@
+.pet-card {
+    background-color: var(--background-color);
+}
+
+.pet-card-content {
+    display: flex;
+    padding-left: 1rem;
+    justify-content: space-between;
+    align-items: center;
+}

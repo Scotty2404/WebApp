@@ -1,0 +1,22 @@
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 1rem;
+}
+
+.pet-grid {
+    display: grid;
+    gap: 0.5rem;
+}
+
+.add-btn {
+    background-color: var(--secondary-color);
+    color: var(--text-primary);
+}

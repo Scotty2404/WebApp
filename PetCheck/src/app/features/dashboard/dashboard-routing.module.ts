@@ -12,7 +12,7 @@ const routes: Routes = [
     data: { title: 'PetCheck', subtitle: 'Meine Haustiere', returnLink: '' }
   },
   { 
-    path: 'details', 
+    path: 'details/:id', 
     component: DetailComponent,
     data: { title: 'PetCheck', subtitle: 'Details', returnLink: '/overview' } 
   },

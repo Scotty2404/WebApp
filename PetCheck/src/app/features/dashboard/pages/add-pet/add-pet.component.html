@@ -1,23 +1,40 @@
-<form [formGroup]="petForm" (ngSubmit)="onSubmit()">
-  <div>
-    <label>Name:</label>
-    <input formControlName="name" type="text" />
-  </div>
+<app-title
+  pageTitle="Neues Tier anlegen"
+  routerLink="/dashboard"
+></app-title>
 
-  <div>
-    <label>Species:</label>
-    <input formControlName="species" type="text" />
-  </div>
+<mat-card class="pet-form-card">
+  <form [formGroup]="petForm" (ngSubmit)="onSubmit()" class="pet-form">
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name"/>
+    </mat-form-field>
 
-  <div>
-    <label>Breed:</label>
-    <input formControlName="breed" type="text" />
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Art des Tieres</mat-label>
+        <input matInput formControlName="species"/>
+    </mat-form-field>
 
-  <div>
-    <label>Birth Date:</label>
-    <input formControlName="birthDate" type="date" />
-  </div>
+    <mat-form-field appearance="outline">
+      <mat-label>Rasse</mat-label>
+        <input matInput formControlName="breed"/>
+    </mat-form-field>
 
-  <button type="submit" [disabled]="petForm.invalid">Add Pet</button>
-</form>
+    <mat-form-field appearance="outline">
+      <mat-label>Geburtsdatum</mat-label>
+      <input matInput formControlName="birthDate" [matDatepicker]="picker"/>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+
+
+    <div class="form-actions">
+      <button matButton="elevated" color="primary" type="submit" [disabled]="petForm.invalid">
+        Haustier hinzufügen
+      </button>
+    </div>
+
+  </form>
+</mat-card>

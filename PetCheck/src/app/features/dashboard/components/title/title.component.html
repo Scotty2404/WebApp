@@ -1,0 +1,24 @@
+<div class="title">
+    <div class="returnIcon">
+        @if(routerLink) {
+        <button
+            matIconButton
+            [routerLink]="routerLink">
+            <mat-icon>chevron_left</mat-icon>
+        </button>
+        }        
+    </div>
+
+    <h1 class="pageTitle">{{ pageTitle }}</h1>
+
+    <span class="spacer"></span>
+
+    @if(additionalButton) {
+        <button class="left"
+            matIconButton
+            [routerLink]="additionalButton">
+            <mat-icon>{{ iconSlot }}</mat-icon>
+        </button>
+    }
+</div>
+

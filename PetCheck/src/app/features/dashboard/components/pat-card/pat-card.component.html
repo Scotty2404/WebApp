@@ -1,6 +1,13 @@
 <mat-card
     class="pet-card"
-    (click)="select.emit()">
-    <mat-card-title> {{pet.name}} </mat-card-title>
-    <mat-card-subtitle> {{ pet.species }}: {{ pet.breed }} </mat-card-subtitle>
+    appearance="outlined"
+    (click)="select.emit(pet.id)">
+    <div class="pet-card-content">
+        <div class="pet-info">
+            <mat-card-title> {{pet.name}} </mat-card-title>
+            <mat-card-subtitle> Katze </mat-card-subtitle>
+        </div>
+
+        <mat-icon>chevron_right</mat-icon>
+    </div>
 </mat-card>

@@ -1,19 +1,38 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup ,Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { PetActions } from '../../../../core/store/pets/pets.actions';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
-import { Pet } from '../../../../core/model/pet';
 import { take } from 'rxjs';
-import { Router } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CalendarRoutingModule } from "../../../calendar/calendar-routing.module";
+import { TitleComponent } from '../../components/title/title.component';
+import { MatCard } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatLabel } from '@angular/material/form-field';
+import { MatButtonModule } from '@angular/material/button';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core'
+import { Pet } from '../../../../core/model/pet';
 import { Timestamp } from '@angular/fire/firestore';
-import { HealthRecord } from '../../../../core/model/health-record';
+import { PetActions } from '../../../../core/store/pets/pets.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-pet',
-  imports: [ReactiveFormsModule],
+  imports: [
+    ReactiveFormsModule, 
+    CalendarRoutingModule, 
+    TitleComponent, 
+    MatCard, 
+    MatFormFieldModule, 
+    MatLabel, 
+    MatInputModule,
+    MatButtonModule,
+    MatDatepickerModule
+  ],
   templateUrl: './add-pet.component.html',
+  providers: [provideNativeDateAdapter()],
   styleUrl: './add-pet.component.css'
 })
 export class AddPetComponent implements OnInit{
@@ -38,15 +57,20 @@ export class AddPetComponent implements OnInit{
   onSubmit() {
     if(this.petForm.invalid || !this.userId) return;
 
+    const newPet = this.petForm.value;
+
+    const petToSave: Pet = {
+      name: newPet.name,
+      species: newPet.species,
+      breed: newPet.breed,
+      birthDate: Timestamp.fromDate(newPet.birthDate),
+    }
+
     console.log(this.userId);
 
     const formValue = this.petForm.value;
-    const newPet: Pet = {
-      name: formValue.name,
-    };
-
     this.store.dispatch(PetActions.addPet({ userId: this.userId, pet: newPet }));
 
-    //this.router.navigate(['/dashboard']);
+    this.router.navigate(['/dashboard']);
   }
 }

@@ -1,21 +1,19 @@
 <section class="dashboard">
-    <h2>Meine Haustiere</h2>
-    <div class="pet-gtid">
-
-            @for(pet of (pets$ | async); track pet.id) {
-                {{pet.name}}
+    <div class="header">
+        <app-title
+            pageTitle = "Meine Haustiere"
+            additionalButton="/dashboard/add"
+            iconSlot="add"
+            >
+        </app-title>
+    </div>
+    <div class="pet-grid">
+        @for(pet of (pets$ | async); track pet.id) {
             <app-pet-card
                 [pet]="pet"
                 (click)="openPet(pet)">
             </app-pet-card>
-            }
+        }
 
     </div>
-    <button 
-        matFab 
-        color="primary"
-        class="add-btn"
-        (click)="addPet()">
-        <mat-icon>add</mat-icon>
-    </button>
 </section>
