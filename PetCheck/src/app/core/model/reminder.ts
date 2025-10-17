@@ -1,9 +1,10 @@
 export interface Reminder {
-    id: number;
-    petId: number;
+    id?: string;
+    petName: string;
     title: string;
-    type: string;
-    dueDate: Date;
+    time: string;
+    notified: boolean;
     notes?: string;
-    isCompleted: boolean;
 }
+
+export type ReminderCreate = Omit<Reminder, 'id'>;
