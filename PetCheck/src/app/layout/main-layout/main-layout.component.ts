@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-main-layout',
-  imports: [NavbarComponent, HeaderComponent, RouterOutlet, AsyncPipe],
+  imports: [NavbarComponent, HeaderComponent, RouterOutlet],
   templateUrl: './main-layout.component.html',
   styleUrl: './main-layout.component.css'
 })
