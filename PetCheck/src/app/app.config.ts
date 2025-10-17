@@ -15,6 +15,8 @@ import { AuthEffects } from './core/store/auth/auth.effects';
 import { PetEffects } from './core/store/pets/pets.effects';
 import { UserEffects } from './core/store/user/user.effects';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { reminderReducer } from './core/store/reminders/reminders.reducer';
+import { reminderEffects } from './core/store/reminders/reminder.effects';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLb6gK4thvmfCdEvaOqaxNrlo-ruOZV9o",
@@ -37,8 +39,9 @@ export const appConfig: ApplicationConfig = {
       auth: authReducer,
       pets: petReducer,
       users: userReducer,
+      reminders: reminderReducer,
     }), 
-    provideEffects([AuthEffects, PetEffects, UserEffects]),
+    provideEffects([AuthEffects, PetEffects, UserEffects, reminderEffects]),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => {

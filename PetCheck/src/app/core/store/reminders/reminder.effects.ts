@@ -15,13 +15,13 @@ export class reminderEffects {
     add$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReminderActions.add),
-            mergeMap(action => 
-                from(this.ReminderService.addAppointment(action.appointment)).pipe(
+            mergeMap(action => { console.log('effet');
+                return from(this.ReminderService.addAppointment(action.appointment)).pipe(
                     map(() => ReminderActions.addSuccess({
                         appointment: { ...action.appointment, notified: false }
                     })),
                     catchError(error => of(ReminderActions.addFailure({ error })))
-                )
+                )}
             )
         )
     );

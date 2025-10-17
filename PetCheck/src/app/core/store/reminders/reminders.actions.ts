@@ -1,8 +1,8 @@
-import { createActionGroup, emptyProps, props } from "@ngrx/store";
+import { createActionGroup, props } from "@ngrx/store";
 import { Reminder } from "../../model/reminder";
 
 export const ReminderActions = createActionGroup({
-    source: 'reminders',
+    source: 'Reminder',
     events: {
         //ADD Notification
         'Add': props<{ appointment: Omit<Reminder, 'id' | 'notified'> }>(),

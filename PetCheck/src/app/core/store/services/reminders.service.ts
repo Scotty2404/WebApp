@@ -13,6 +13,10 @@ export class ReminderService {
         const user = this.auth.currentUser;
         if(!user) throw new Error('Currently not lodded in');
 
+        console.log('trying to add reminder...');
+
+        console.log(user.uid);
+
         const ref = collection(this.firestore, `users/${user.uid}/reminders`);
         await addDoc(ref, { ...appointment, notified: false });
     }

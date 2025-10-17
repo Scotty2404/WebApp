@@ -1,5 +1,4 @@
 import { createReducer, on } from "@ngrx/store";
-import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
 import { PetActions } from './pets.actions';
 import { Pet } from "../../model/pet";
 
