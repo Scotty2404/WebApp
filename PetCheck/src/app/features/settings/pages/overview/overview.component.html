@@ -1,1 +1,30 @@
-<p>overview works!</p>
+<section class="settings-page">
+    <app-title
+        pageTitle = "Einstellungen"
+        >
+    </app-title>
+
+    <mat-card class="account-card">
+        <mat-card-title>Account</mat-card-title>
+        <mat-card-content>
+            <p>E-Mail: {{ (user$ | async)?.email ?? 'nicht eingelooged' }}</p>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-card class="push-card">
+        <mat-card-title>Push-Benachrichtigungen</mat-card-title>
+        <mat-card-content>
+            <p>Status: {{ (token$ | async) ? 'granted' : 'denied' }}</p>
+
+            <mat-slide-toggle
+                (change)="toggleNotifications($event.checked)"
+                [checked]="notificationsEnabled$ | async">
+                Benachrichtigungen aktivieren
+            </mat-slide-toggle>
+            @if(token$ | async) {
+                <p>Devicetoken: <code>{{ token$ }}</code></p>
+            }
+            <p>Hinweis: Beim Aktivieren werden werden Berechtigungen angefragt, bei bestätigung wird das token in deinem Userdokument gespeichert</p>
+        </mat-card-content>
+    </mat-card>
+</section>

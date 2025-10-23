@@ -12,25 +12,45 @@ async function checkAppointments() {
     const now = new Date();
     const in15min = new Date(now.getTime() + 15 * 60 * 1000);
 
-    const snapshot = await db.collection("appointments")
-        .where("time", "<=", in15min.toISOString())
-        .where("notified", "==", false)
-        .get();
+    const usersSnapshot = await db.collection("users").get();
 
-    for (const doc of snapshot.docs) {
-        const data = doc.data();
+    for (const userDoc of usersSnapshot.docs) {
+        const userData = userDoc.data();
+        const userToken = userData?.userToken ?? null;
+        
+        const remindersRef = userDoc.ref.collection('reminders');
 
-        if(data.usrToken) {
-            await messaging.send({
-                token: data.usrToken,
-                notification: {
-                    title: `Erinnerung für ${data.petName}: ${data.title}`,
-                    body: `um ${new Date(data.time).toLocaleTimeString()}`,
+        const in15Timestamp = admin.firestore.Timestamp.fromDate(in15min);
+        
+        const snapshot = await remindersRef
+            .where("startTime", "<=", in15Timestamp)
+            .where("notified", "==", false)
+            .get();
+
+        for(const doc of snapshot.docs) {
+            const data = doc.data();
+            const token = userToken ?? data.usrToken;
+            if(!token) continue;
+            
+            const title = `Erinnerung für ${data.petName}: ${data.title}`;
+            const body = `um ${new Date(data.startTime).toLocaleTimeString()} Uhr`;
+
+            const message = {
+                token,
+                notification: { title, body },
+                data: {
+                    reminderId: doc.id,
+                    userId: userDoc.id,
                 },
-            });
-            console.log(`Push send to ${data.usrId}`);
+            };
 
-            await doc.ref.update({ notified: true });
+            try {
+                await messaging.send(message);
+                console.log(`Push sent to user: ${userDoc.id} for reminder: ${doc.id}`);
+                await doc.ref.update({ notified: true });
+            } catch (error) {
+                console.error("Error sending push: ", error);
+            }
         }
     }
 }

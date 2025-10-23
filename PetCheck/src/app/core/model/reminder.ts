@@ -4,6 +4,7 @@ export interface Reminder {
     id?: string;
     petName: string;
     title: string;
+    startTime: Timestamp;
     notified: boolean;
 }
 

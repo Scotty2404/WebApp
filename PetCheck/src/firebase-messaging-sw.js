@@ -11,7 +11,8 @@ firebase.initializeApp({
 const messaging = firebase.messaging();
 
 messaging.onBackgroundMessage((payload) => {
-    self.ServiceWorkerRegistration.showNotification(payload.notification.title, {
-        body: payload.notification.body,
-    });
+    const notificationTitle = payload.notification.title;
+    const notificationBody = payload.notification.body;
+
+    self.registration.showNotification(notificationTitle, notificationBody);
 });

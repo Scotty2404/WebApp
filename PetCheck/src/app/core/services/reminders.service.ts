@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
 import { addDoc, collection, Firestore } from "@angular/fire/firestore";
-import { Reminder } from "../../model/reminder";
+import { Reminder } from "../model/reminder";
 
 
 @Injectable({ providedIn: 'root' })

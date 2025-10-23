@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarMonthViewComponent, CalendarEvent, CalendarView } from 'angular-calendar';
 import { TitleComponent } from '../../../dashboard/components/title/title.component';
-import { map, Observable } from 'rxjs';
+import { combineLatest, map, Observable } from 'rxjs';
 import  { Store } from '@ngrx/store';
 import { selectAllPets } from '../../../../core/store/pets/pets.selectors';
 import { AsyncPipe } from '@angular/common';
+import { selectAllReminders } from '../../../../core/store/reminders/reminder.selectors';
+import { PushNotificationService } from '../../../../core/services/push-notification.service';
 
 @Component({
   selector: 'app-overview',
@@ -22,19 +24,30 @@ export class OverviewComponent implements OnInit {
   view: CalendarView = CalendarView.Month;
   viewDate = new Date();
   
-  constructor(private store: Store) {}
+  constructor(private store: Store, private pushNotificationServie: PushNotificationService) {}
 
   ngOnInit(): void {
-    this.events$ = this.store.select(selectAllPets).pipe(
-      map(pets => {
-        if(!pets){
-          return [];
-        }
-        return pets.map(pet => ({
+    const pets$ = this.store.select(selectAllPets);
+    const reminders$ = this.store.select(selectAllReminders);
+
+    this.events$ = combineLatest([pets$, reminders$]).pipe(
+      map(([pets, reminders]) => {
+        const petEvents: CalendarEvent[] = pets.map(pet => ({
           start: pet.birthDate?.toDate(),
           title: `${pet.name}'s Geburtstag!`,
-        })) as CalendarEvent[]
+        }));
+
+        const reminderEvents: CalendarEvent[] = reminders.map(reminder => ({
+          start: reminder.startTime?.toDate(),
+          title: `${reminder.title} (${reminder.petName})`,
+        }));
+
+        return [...petEvents, ...reminderEvents];
       })
-    );      
+    )      
+  }
+
+  activateNotifications() {
+    this.pushNotificationServie.requestPermission();
   }
 }

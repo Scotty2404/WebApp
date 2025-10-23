@@ -60,6 +60,21 @@ export class AuthEffects {
         )
     );
 
+    //Reload
+    reloadUser$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(AuthActions.reloadUser),
+            mergeMap(({ userId }) => {
+                const userDoc = doc(this.firestore, `users/${userId}`);
+                return docData(userDoc, { idField: 'id' }).pipe(
+                    map((user) => AuthActions.reloadUserSuccess({ user: user as User })),
+                    catchError(error => of(AuthActions.reloadUserFailure({ error})))
+                );
+            }),
+            catchError(error => of(AuthActions.reloadUserFailure({ error })))
+        )
+    );
+
     //Logout
     logout$ = createEffect(() => 
         this.actions$.pipe(

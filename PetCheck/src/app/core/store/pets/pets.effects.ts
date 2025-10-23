@@ -5,7 +5,7 @@ import { map, catchError, mergeMap } from 'rxjs/operators';
 import { of, from } from "rxjs";
 import { Firestore, collection, collectionData } from "@angular/fire/firestore";
 import { Pet } from "../../model/pet";
-import { PetService } from "../services/pet.service";
+import { PetService } from "../../services/pet.service";
 
 @Injectable()
 export class PetEffects {

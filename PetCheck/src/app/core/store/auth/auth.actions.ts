@@ -20,5 +20,10 @@ export const AuthActions = createActionGroup({
         'Register': props<{ email: string; password: string, name: string }>(),
         'Register Sucess': props<{ user: User }>(),
         'Register Failure': props<{ error: any }>(),
+
+        //Reload User
+        'Reload User': props<{ userId: string }>(),
+        'Reload User Success': props<{ user: User }>(),
+        'Reload User Failure': props<{ error: string }>(),
     }
 })

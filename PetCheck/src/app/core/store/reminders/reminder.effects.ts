@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { ReminderActions } from "./reminders.actions";
 import { mergeMap, from, catchError, of, map } from "rxjs";
-import { ReminderService } from "../services/reminders.service";
+import { ReminderService } from "../../services/reminders.service";
 import { collection, collectionData, Firestore } from "@angular/fire/firestore";
 import { Reminder } from "../../model/reminder";
 
@@ -15,7 +15,7 @@ export class reminderEffects {
     add$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReminderActions.add),
-            mergeMap(action => { console.log('effet');
+            mergeMap(action => {
                 return from(this.ReminderService.addAppointment(action.appointment)).pipe(
                     map(() => ReminderActions.addSuccess({
                         appointment: { ...action.appointment, notified: false }

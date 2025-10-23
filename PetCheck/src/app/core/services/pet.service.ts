@@ -1,7 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
 import { addDoc, collection, Firestore, doc, updateDoc, deleteDoc, collectionData } from "@angular/fire/firestore";
-import { Pet } from "../../model/pet";
+import { Pet } from "../model/pet";
 
 
 @Injectable({ providedIn: 'root' })

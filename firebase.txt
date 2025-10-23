@@ -1,0 +1,21 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyC4TW60BlEG5L1THRh77ZeJ6MVjRcuff_0",
+  authDomain: "petcheck-c645a.firebaseapp.com",
+  projectId: "petcheck-c645a",
+  storageBucket: "petcheck-c645a.firebasestorage.app",
+  messagingSenderId: "832643221587",
+  appId: "1:832643221587:web:d33e2682badaccbe8a1ea6",
+  measurementId: "G-BG1TTRFR7E"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);

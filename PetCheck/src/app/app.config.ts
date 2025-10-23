@@ -17,6 +17,7 @@ import { UserEffects } from './core/store/user/user.effects';
 import { getAuth, provideAuth } from '@angular/fire/auth';
 import { reminderReducer } from './core/store/reminders/reminders.reducer';
 import { reminderEffects } from './core/store/reminders/reminder.effects';
+import { getMessaging, provideMessaging } from '@angular/fire/messaging';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBLb6gK4thvmfCdEvaOqaxNrlo-ruOZV9o",
@@ -35,6 +36,10 @@ export const appConfig: ApplicationConfig = {
         enabled: !isDevMode(),
         registrationStrategy: 'registerWhenStable:30000'
     }), 
+    provideServiceWorker('firebase-messaging-sw.js', {
+      enabled: true,
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
     provideStore({
       auth: authReducer,
       pets: petReducer,
@@ -50,6 +55,7 @@ export const appConfig: ApplicationConfig = {
         console.warn('Firestore Persistence not enabled:', err);
       });
       return firestore;
-    })
+    }),
+    provideMessaging(() => getMessaging()),
   ]
 };

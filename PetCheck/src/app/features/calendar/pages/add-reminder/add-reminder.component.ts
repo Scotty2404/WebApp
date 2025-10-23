@@ -56,11 +56,11 @@ export class AddReminderComponent implements OnInit {
     const reminderToSave = {
       title: newReminder.title,
       petName: newReminder.petName,
-      //startTime: Timestamp.fromDate(newReminder.startTime),
+      startTime: Timestamp.fromDate(newReminder.startTime),
     }
 
     console.log('trying to add reminder: ', newReminder);
     this.store.dispatch(ReminderActions.add({ appointment: reminderToSave }));
-    //this.router.navigate(['/calendar']);
+    this.router.navigate(['/calendar']);
   }
 }
