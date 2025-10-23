@@ -8,6 +8,30 @@ admin.initializeApp({
 const db = admin.firestore();
 const messaging = admin.messaging();
 
+const TEST_TOKEN = 'c0tBAijqMCF6tXwdXQrRRC:APA91bGdYdgi_ApduyHZix-f3i2veR55ZOkays78GJu_D0tQ8JOg87NiSVLxXhCbnhpSPuVlgOFn1dnjQ48p0LYqiweHUL-VXGUM0xy3d3MFvLUTrt0REkA';
+
+async function sendTestNotification() {
+    if(!TEST_TOKEN) {
+        console.error('No test token provided');
+        return;
+    }
+
+    const message = {
+        token: TEST_TOKEN,
+        notification: {
+            title: 'Test Notification!',
+            body: 'This message gets displayed every 5 seconds',
+        },
+    };
+
+    try {
+        const response = messaging.send(message);
+        console.log('Test Notification send: ', response);
+    } catch (error) {
+        console.error('Error while sending: ', error);
+    }
+}
+
 async function checkAppointments() {
     const now = new Date();
     const in15min = new Date(now.getTime() + 15 * 60 * 1000);
@@ -55,5 +79,5 @@ async function checkAppointments() {
     }
 }
 
-cron.schedule("*/5 * * * *", checkAppointments);
+cron.schedule("*/5 * * * *", sendTestNotification);
 console.log("Scheduler startet...");

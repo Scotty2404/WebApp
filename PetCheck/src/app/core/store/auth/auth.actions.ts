@@ -21,9 +21,13 @@ export const AuthActions = createActionGroup({
         'Register Sucess': props<{ user: User }>(),
         'Register Failure': props<{ error: any }>(),
 
-        //Reload User
-        'Reload User': props<{ userId: string }>(),
-        'Reload User Success': props<{ user: User }>(),
-        'Reload User Failure': props<{ error: string }>(),
+        //Token
+        'Generate Push Token': emptyProps(),
+        'Generate Push Token Success': props<{ token: string }>(),
+        'Generate Push Token Failure': props<{ error: string }>(),
+
+        'Delete Push Token': emptyProps(),
+        'Delete Push Token Success': emptyProps(),
+        'Delete Push Token Failure': props<{ error: string }>(),
     }
 })

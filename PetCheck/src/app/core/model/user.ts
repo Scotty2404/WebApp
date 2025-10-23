@@ -4,5 +4,5 @@ export interface User {
     id: string;
     name: string;
     email: string;
-    pushToken?: string;
+    pushToken?: string | null
 }

@@ -18,13 +18,14 @@
 
             <mat-slide-toggle
                 (change)="toggleNotifications($event.checked)"
-                [checked]="notificationsEnabled$ | async">
+                [checked]="(token$ | async) !== null"
+                [disabled]="(loading$ | async)">
                 Benachrichtigungen aktivieren
             </mat-slide-toggle>
             @if(token$ | async) {
                 <p>Devicetoken: <code>{{ token$ }}</code></p>
             }
-            <p>Hinweis: Beim Aktivieren werden werden Berechtigungen angefragt, bei bestätigung wird das token in deinem Userdokument gespeichert</p>
+            <p>Hinweis: Beim Aktivieren werden werden Berechtigungen angefragt, bei bestätigung wird das token in deinem Userdokument gespeichert</p>                
         </mat-card-content>
     </mat-card>
 </section>

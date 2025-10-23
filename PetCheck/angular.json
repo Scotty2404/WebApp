@@ -26,9 +26,9 @@
                 "input": "public"
               },
               {
-                "glob": "firebase-messaging-sw.js",
-                "input": "src/",
-                "output": "/"
+                "input": "src",
+                "output": "/",
+                "glob": "firebase-messaging-sw.js"
               }
             ],
             "styles": [
@@ -44,7 +44,7 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumError": "1.5MB"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -90,6 +90,11 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "input": "src",
+                "output": "/",
+                "glob": "firebase-messaging-sw.js"
               }
             ],
             "styles": [

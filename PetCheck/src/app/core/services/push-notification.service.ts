@@ -2,6 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
 import { doc, Firestore, setDoc, updateDoc } from "@angular/fire/firestore";
 import { getToken, Messaging, onMessage, deleteToken } from "@angular/fire/messaging";
+import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({ providedIn: 'root'})
 export class PushNotificationService {
@@ -9,42 +10,38 @@ export class PushNotificationService {
     private firestore = inject(Firestore);
     private auth = inject(Auth);
 
+    private vapidKey = 'BPZ5Uf3I_ZNqJ6YvXNiBvju9rXJUTn5MFkDLwQCF0cPG2uJ6ZusWmV6tae0A8U8jRjpnmIJQevCsh7Ui6CQYe8Q';
+
     private onMessageUnsub?: () => void;
 
-    async requestPermission(): Promise<string | null> {
+    async registerPushToken(): Promise<string | null> {
+        const user = this.auth.currentUser;
+        if(!user) return null;
+
+        const permission = await Notification.requestPermission();
+        if(permission !== 'granted') throw new Error('Permission not granted for Notification');
+
         try {
-            const permission = await Notification.requestPermission();
             const registration = await navigator.serviceWorker.ready;
-            
-            console.log('Permission status: ', permission);
-            if(permission !== 'granted') return null;
-
-            getToken(this.messaging, { 
-                vapidKey: 'BJE0leHFrYHBWiGUvS131H1k_o23GW3e7z_WiVQ9Zoo4nP9SYu7XVb4cK0BWgGSLO_Mfz-l-bLxjIAtl7-y5N8c',
-                serviceWorkerRegistration: registration
-             }).then((currentToken) => {
-            if (currentToken) {
-                const user = this.auth.currentUser;
-                if(!user) return null;
-
-                setDoc(doc(this.firestore, `users/${user.uid}`), { pushToken: currentToken }, { merge: true });
-                return currentToken;
-            } else {
-                // Show permission request UI
-                console.log('No registration token available. Request permission to generate one.');
-                return null;
-                // ...
-            }
-            }).catch((error) => {
-                console.error('Push permission / token error:', error);
-                return null;
+            if(!registration) return null;
+            console.log(registration);
+            const token = await getToken(this.messaging, {
+                vapidKey: this.vapidKey,
+                serviceWorkerRegistration: registration,
             });
-        } catch (error) {
-            console.error('Push permission / token error:', error);
-            return null;
-        }
 
-        return null;
+            console.log('token: ', token);
+
+            if(!token) throw new Error('No registration token received');
+
+            await setDoc(doc(this.firestore, `users/${user.uid}`), { pushToken: token }, { merge: true });
+            console.log('Push token saved to user: ', token);
+
+            return token;
+        } catch (error: any) {
+            console.error('Error while token generation: ', error);
+            throw error;
+        }
     }
 
     async removeTokenForCurrentUser(): Promise<void> {

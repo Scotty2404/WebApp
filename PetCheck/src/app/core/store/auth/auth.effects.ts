@@ -5,12 +5,14 @@ import { Firestore, docData, setDoc, doc } from "@angular/fire/firestore";
 import { AuthActions } from "./auth.actions";
 import { mergeMap, switchMap, from, catchError, of, map, tap, take } from "rxjs";
 import { User } from "../../model/user";
+import { PushNotificationService } from "../../services/push-notification.service";
 
 @Injectable()
 export class AuthEffects {
     private actions$ = inject(Actions);
     private auth = inject(Auth);
     private firestore = inject(Firestore);
+    private pushService = inject(PushNotificationService);
 
     login$ = createEffect(() =>
         this.actions$.pipe(
@@ -60,18 +62,36 @@ export class AuthEffects {
         )
     );
 
-    //Reload
-    reloadUser$ = createEffect(() => 
+    //Generate Token
+    generateToken$ = createEffect(() => 
         this.actions$.pipe(
-            ofType(AuthActions.reloadUser),
-            mergeMap(({ userId }) => {
-                const userDoc = doc(this.firestore, `users/${userId}`);
-                return docData(userDoc, { idField: 'id' }).pipe(
-                    map((user) => AuthActions.reloadUserSuccess({ user: user as User })),
-                    catchError(error => of(AuthActions.reloadUserFailure({ error})))
+            ofType(AuthActions.generatePushToken),
+            switchMap(() => {
+                return from(this.pushService.registerPushToken()).pipe(
+                    map((token) => {
+                        if (token == null) {
+                            throw new Error('No token generated');
+                        }
+                        return AuthActions.generatePushTokenSuccess({ token: token as string });
+                    }),
+                    catchError((error) => of(AuthActions.generatePushTokenFailure({ error })))
                 );
-            }),
-            catchError(error => of(AuthActions.reloadUserFailure({ error })))
+            })
+        )
+    );
+
+    deleteToken$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(AuthActions.deletePushToken),
+            switchMap(() => {
+                return from
+                (this.pushService.removeTokenForCurrentUser()).pipe(
+                    map(() => {
+                        return AuthActions.deletePushTokenSuccess();
+                    }),
+                    catchError((error) => of(AuthActions.deletePushTokenFailure({ error })))
+                );
+            })
         )
     );
 

@@ -46,8 +46,4 @@ export class OverviewComponent implements OnInit {
       })
     )      
   }
-
-  activateNotifications() {
-    this.pushNotificationServie.requestPermission();
-  }
 }

@@ -7,3 +7,4 @@ export const selectAuthUser = createSelector(selectAuthState, (auth: AuthState) 
 export const selectIsAuthenticated = createSelector(selectAuthState, (auth: AuthState) => auth.isAuthenticated);
 export const selectAuthLoading = createSelector(selectAuthState, (auth: AuthState) => auth.loading);
 export const selectAuthError = createSelector(selectAuthState, (auth: AuthState) => auth.error);
+export const selectAuthUserPushToken = createSelector(selectAuthState, (auth: AuthState) => auth.user?.pushToken || null);

@@ -36,10 +36,6 @@ export const appConfig: ApplicationConfig = {
         enabled: !isDevMode(),
         registrationStrategy: 'registerWhenStable:30000'
     }), 
-    provideServiceWorker('firebase-messaging-sw.js', {
-      enabled: true,
-      registrationStrategy: 'registerWhenStable:30000'
-    }),
     provideStore({
       auth: authReducer,
       pets: petReducer,

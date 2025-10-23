@@ -41,10 +41,37 @@ export const authReducer = createReducer(
     on(AuthActions.logoutSucess, state => ({
         ...initialState,
     })),
-    
-    on(AuthActions.reloadUserSuccess, (state, { user }) => ({
+
+    //Token
+    on(AuthActions.generatePushToken, (state) => ({
         ...state,
-        user,
+        loading: true,
+    })),
+    on(AuthActions.generatePushTokenSuccess, (state, { token }) => ({
+        ...state,
+        loading: false,
+        user: state.user ? { ...state.user, pushToken: token } : null,
+    })),
+    on(AuthActions.generatePushTokenFailure, (state, { error }) => ({
+        ...state,
+        loading: false,
+        error: error,
+    })),
+
+    on(AuthActions.deletePushToken, (state) => ({
+        ...state,
+        loading: true,
+    })),
+
+    on(AuthActions.deletePushTokenSuccess, (state) => ({
+        ...state,
+        loading: false,
+        user: state.user ? { ...state.user, pushToken: null } : null,
+    })),
+
+    on(AuthActions.deletePushTokenFailure, (state) => ({
+        ...state,
+        loading: false,
     })),
 
     on(AuthActions.authStateChanged, (state, { user }) => ({
