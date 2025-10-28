@@ -6,6 +6,7 @@ import { AuthActions } from "./auth.actions";
 import { mergeMap, switchMap, from, catchError, of, map, tap, take } from "rxjs";
 import { User } from "../../model/user";
 import { PushNotificationService } from "../../services/push-notification.service";
+import { Router } from "@angular/router";
 
 @Injectable()
 export class AuthEffects {
@@ -13,6 +14,7 @@ export class AuthEffects {
     private auth = inject(Auth);
     private firestore = inject(Firestore);
     private pushService = inject(PushNotificationService);
+    private router = inject(Router);
 
     login$ = createEffect(() =>
         this.actions$.pipe(
@@ -106,6 +108,16 @@ export class AuthEffects {
                 )
             )
         )
+    );
+
+    logoutSuccess$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(AuthActions.logoutSucess),
+            tap(() => {
+                this.router.navigate(['/login']);
+            })
+        ),
+        { dispatch: false }
     );
 
     authState$ = createEffect(() =>

@@ -4,14 +4,14 @@
         >
     </app-title>
 
-    <mat-card class="account-card">
+    <mat-card class="settings-card">
         <mat-card-title>Account</mat-card-title>
         <mat-card-content>
             <p>E-Mail: {{ (user$ | async)?.email ?? 'nicht eingelooged' }}</p>
         </mat-card-content>
     </mat-card>
 
-    <mat-card class="push-card">
+    <mat-card class="settings-card">
         <mat-card-title>Push-Benachrichtigungen</mat-card-title>
         <mat-card-content>
             <p>Status: {{ (token$ | async) ? 'granted' : 'denied' }}</p>
@@ -28,4 +28,10 @@
             <p>Hinweis: Beim Aktivieren werden werden Berechtigungen angefragt, bei bestätigung wird das token in deinem Userdokument gespeichert</p>                
         </mat-card-content>
     </mat-card>
+
+    <button
+        matButton
+        (click)="logOut()">
+        Ausloggen
+    </button>
 </section>

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CalendarMonthViewComponent, CalendarEvent, CalendarView } from 'angular-calendar';
+import { CalendarMonthViewComponent, CalendarEvent, CalendarView, CalendarDayViewComponent } from 'angular-calendar';
 import { TitleComponent } from '../../../dashboard/components/title/title.component';
 import { combineLatest, map, Observable } from 'rxjs';
 import  { Store } from '@ngrx/store';
 import { selectAllPets } from '../../../../core/store/pets/pets.selectors';
 import { AsyncPipe } from '@angular/common';
 import { selectAllReminders } from '../../../../core/store/reminders/reminder.selectors';
-import { PushNotificationService } from '../../../../core/services/push-notification.service';
 
 @Component({
   selector: 'app-overview',
@@ -14,17 +13,20 @@ import { PushNotificationService } from '../../../../core/services/push-notifica
     CalendarMonthViewComponent,
     TitleComponent,
     AsyncPipe,
-  ],
+    CalendarDayViewComponent
+],
   templateUrl: './overview.component.html',
   styleUrl: './overview.component.css'
 })
 export class OverviewComponent implements OnInit {
   events$!: Observable<CalendarEvent[]>;
+  activeDayIsOpen: boolean = false;
+
   readonly CalendarView = CalendarView;
   view: CalendarView = CalendarView.Month;
   viewDate = new Date();
   
-  constructor(private store: Store, private pushNotificationServie: PushNotificationService) {}
+  constructor(private store: Store) {}
 
   ngOnInit(): void {
     const pets$ = this.store.select(selectAllPets);
@@ -44,6 +46,11 @@ export class OverviewComponent implements OnInit {
 
         return [...petEvents, ...reminderEvents];
       })
-    )      
+    );
+  }
+
+  dayClicked({ date }: { date: Date; events: CalendarEvent[] }): void {
+    this.viewDate = date;
+    this.view = CalendarView.Day;
   }
 }

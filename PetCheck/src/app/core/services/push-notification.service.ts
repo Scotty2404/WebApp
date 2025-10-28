@@ -1,8 +1,7 @@
 import { inject, Injectable } from "@angular/core";
 import { Auth } from "@angular/fire/auth";
-import { doc, Firestore, setDoc, updateDoc } from "@angular/fire/firestore";
+import { doc, Firestore, setDoc} from "@angular/fire/firestore";
 import { getToken, Messaging, onMessage, deleteToken } from "@angular/fire/messaging";
-import { isPlatformBrowser } from "@angular/common";
 
 @Injectable({ providedIn: 'root'})
 export class PushNotificationService {

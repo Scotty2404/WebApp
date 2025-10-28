@@ -6,11 +6,24 @@ import { filter, Observable, take, tap } from 'rxjs';
 import { selectAuthLoading, selectAuthUser, selectAuthError, selectIsAuthenticated } from '../../core/store/auth/auth.selectors';
 import { AsyncPipe } from '@angular/common';
 import { Router } from '@angular/router';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatAnchor, MatButton } from "@angular/material/button";
+import { MatButtonModule } from '@angular/material/button';
 
 
 @Component({
   selector: 'app-login-layout',
-  imports: [ReactiveFormsModule, AsyncPipe],
+  imports: [
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    AsyncPipe,
+    MatAnchor
+],
   templateUrl: './login-layout.component.html',
   styleUrl: './login-layout.component.css'
 })

@@ -11,6 +11,7 @@ import { PetActions } from '../../../../core/store/pets/pets.actions';
 import { selectAuthUser } from '../../../../core/store/auth/auth.selectors';
 import { CalendarRoutingModule } from "../../../calendar/calendar-routing.module";
 import { TitleComponent } from '../../components/title/title.component';
+import { ReminderActions } from '../../../../core/store/reminders/reminders.actions';
 
 @Component({
   selector: 'app-overview',
@@ -33,7 +34,8 @@ export class OverviewComponent implements OnInit {
     this.store.select(selectAuthUser).pipe(take(1)).subscribe(user => {
       if(user) this.userId = user.id;
     });
-    this.store.dispatch(PetActions.loadPets({userId: this.userId}));
+    this.store.dispatch(PetActions.loadPets({userId: this.userId }));
+    this.store.dispatch(ReminderActions.load({ userId: this.userId }));
     
     this.pets$ = this.store.select(selectAllPets);
   }
