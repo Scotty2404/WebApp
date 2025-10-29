@@ -6,24 +6,46 @@
 <mat-card class="reminder-form-card">
   <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()" class="reminder-form">
     
+    <!--Title-->
     <mat-form-field appearance="outline">
       <mat-label>Titel</mat-label>
       <input matInput formControlName="title"/>
     </mat-form-field>
 
+    <!--Assigned Pet-->
     <mat-form-field appearance="outline">
       <mat-label>Zugehöriges Haustier</mat-label>
-        <input matInput formControlName="petName"/>
+      <mat-select formControlName="petId">
+        @for (pet of (pets$ | async); track pet.id)
+        {
+          <mat-option
+            [value]="pet.id">
+            {{ pet.name }}
+          </mat-option>          
+        }
+ 
+      </mat-select>
     </mat-form-field>
 
+    <!--Start Date-->
     <mat-form-field appearance="outline">
-      <mat-label>Start</mat-label>
-      <input matInput formControlName="startTime" [matDatepicker]="picker"/>
+      <mat-label>Datum</mat-label>
+      <input matInput formControlName="startDate" [matDatepicker]="picker"/>
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    {{ error$ }}
+    <!--Start Time-->
+    <mat-form-field appearance="outline">
+      <mat-label>Startzeit</mat-label>
+      <input matInput type="startTime" formControlName="startTime" />
+    </mat-form-field>
+
+    <!--End Time (optional)-->
+    <mat-form-field appearance="outline">
+      <mat-label>Endzeit</mat-label>
+      <input matInput type="endTime" formControlName="endTime" />
+    </mat-form-field>
 
     <div class="form-actions">
       <button matButton="elevated" color="primary" type="submit" [disabled]="reminderForm.invalid">

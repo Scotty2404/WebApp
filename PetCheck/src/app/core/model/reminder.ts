@@ -2,9 +2,10 @@ import { Timestamp } from "@angular/fire/firestore";
 
 export interface Reminder {
     id?: string;
-    petName: string;
+    petId: string;
     title: string;
     startTime: Timestamp;
+    endTime: Timestamp;
     notified: boolean;
 }
 

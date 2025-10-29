@@ -41,7 +41,7 @@ export class OverviewComponent implements OnInit {
 
         const reminderEvents: CalendarEvent[] = reminders.map(reminder => ({
           start: reminder.startTime?.toDate(),
-          title: `${reminder.title} (${reminder.petName})`,
+          title: `${reminder.title} (${reminder.petId})`,
         }));
 
         return [...petEvents, ...reminderEvents];

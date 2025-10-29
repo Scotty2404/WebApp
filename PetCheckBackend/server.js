@@ -8,7 +8,7 @@ admin.initializeApp({
 const db = admin.firestore();
 const messaging = admin.messaging();
 
-const TEST_TOKEN = 'c0tBAijqMCF6tXwdXQrRRC:APA91bGdYdgi_ApduyHZix-f3i2veR55ZOkays78GJu_D0tQ8JOg87NiSVLxXhCbnhpSPuVlgOFn1dnjQ48p0LYqiweHUL-VXGUM0xy3d3MFvLUTrt0REkA';
+const TEST_TOKEN = "c0tBAijqMCF6tXwdXQrRRC:APA91bE0zTePd46oBlvq6VNI6Gy6dmrRKa3cECiQ271lToOPl6tLsy_ZjLPlV2vLNHYtPvpKRLzPgU3CqL2rZc3Cxq221vM9x6Q9-K9EQIWwDfMZo2C7YZU";
 
 async function sendTestNotification() {
     if(!TEST_TOKEN) {
@@ -20,7 +20,7 @@ async function sendTestNotification() {
         token: TEST_TOKEN,
         notification: {
             title: 'Test Notification!',
-            body: 'This message gets displayed every 5 seconds',
+            body: 'This message gets displayed every 5 Minutes',
         },
     };
 
