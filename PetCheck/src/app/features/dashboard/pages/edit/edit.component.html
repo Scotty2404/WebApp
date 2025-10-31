@@ -1,0 +1,40 @@
+<app-title
+  pageTitle="Bearbeiten"
+  [routerLink]="'/dashboard/details/' + this.petId"
+></app-title>
+
+<mat-card class="pet-form-card">
+  <form [formGroup]="petForm" (ngSubmit)="onSubmit()" class="pet-form">
+    
+    <mat-form-field appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput formControlName="name"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Art des Tieres</mat-label>
+        <input matInput formControlName="species"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Rasse</mat-label>
+        <input matInput formControlName="breed"/>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Geburtsdatum</mat-label>
+      <input matInput formControlName="birthDate" [matDatepicker]="picker"/>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+
+
+    <div class="form-actions">
+      <button matButton="elevated" color="primary" type="submit" [disabled]="petForm.invalid">
+        Haustier Aktualisieren
+      </button>
+    </div>
+
+  </form>
+</mat-card>

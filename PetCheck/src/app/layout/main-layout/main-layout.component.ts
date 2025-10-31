@@ -7,6 +7,7 @@ import { TitleComponent } from "../../features/dashboard/components/title/title.
 import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { Store } from '@ngrx/store';
+import { PushNotificationService } from '../../core/services/push-notification.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -16,8 +17,9 @@ import { Store } from '@ngrx/store';
 })
 export class MainLayoutComponent implements OnInit{
   
-  constructor(private router: Router, private route: ActivatedRoute, private store: Store) {}
+  constructor(private pushService: PushNotificationService) {}
 
   ngOnInit(): void {
+    this.pushService.listenForMessages();
   }
 }

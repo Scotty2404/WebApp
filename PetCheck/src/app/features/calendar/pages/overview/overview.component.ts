@@ -39,7 +39,7 @@ export class OverviewComponent implements OnInit {
         const petEvents: CalendarEvent[] = pets.map(pet => ({
           start: pet.birthDate?.toDate(),
           title: `${pet.name}'s Geburtstag!`,
-          meta: { id: pet.id  },
+          meta: { petId: pet.id  },
         }));
 
         const reminderEvents: CalendarEvent[] = reminders.map(reminder => {
@@ -69,12 +69,12 @@ export class OverviewComponent implements OnInit {
 
   handleEventClick(event: CalendarEvent): void {
     if (event.meta && event.meta.id) {
-      if(event.title.includes('s Geburtstag!')) {
-        this.router.navigate(['/dashboard/details', event.meta.id]);
-      } else {
-        this.router.navigate(['/calendar/details', event.meta.id]);
-      }
-    } else {
+      this.router.navigate(['/calendar/details', event.meta.id]);
+    } 
+    else if (event.meta && event.meta.petId) {
+      this.router.navigate(['/dashboard/details', event.meta.id]);
+    } 
+    else {
       console.warn('Event hat keine ID in meta:', event);
     }
   }   

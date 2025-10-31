@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { OverviewComponent } from './pages/overview/overview.component';
 import { DetailComponent } from './pages/detail/detail.component';
 import { AddPetComponent } from './pages/add-pet/add-pet.component';
+import { EditComponent } from './pages/edit/edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'overview', pathMatch: 'full' },
@@ -15,6 +16,11 @@ const routes: Routes = [
     path: 'details/:id', 
     component: DetailComponent,
     data: { title: 'PetCheck', subtitle: 'Details', returnLink: '/overview' } 
+  },
+  { 
+    path: 'edit/:id', 
+    component: EditComponent,
+    data: { title: 'PetCheck', subtitle: 'Edit', returnLink: '/details' } 
   },
   { 
     path: 'add', 

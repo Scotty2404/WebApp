@@ -12,11 +12,11 @@ export const PetActions = createActionGroup({
         'Add Pet Sucess': props<{ pet: Pet }>(),
         'Add Pet Failure': props<{ error: any }>(),
 
-        'Update Pet': props<{ userId: string; pet: Pet }>(),
+        'Update Pet': props<{ pet: Pet }>(),
         'Update Pet Sucess': props<{ pet: Pet }>(),
         'Update Pet Failure': props<{ error: any }>(),
 
-        'Delete Pet': props<{ userId: string; petId: string }>(),
+        'Delete Pet': props<{ petId: string }>(),
         'Delete Pet Sucess': props<{ petId: string }>(),
         'Delete Pet Failure': props<{ error: number }>(),
 

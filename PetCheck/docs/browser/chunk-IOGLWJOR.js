@@ -1,1 +1,0 @@
-import{P as e}from"./chunk-LZ4J4AIH.js";import{Ca as i,W as t,bc as r}from"./chunk-PYHIAX6W.js";var m=class o{static \u0275fac=function(n){return new(n||o)};static \u0275mod=i({type:o});static \u0275inj=t({imports:[r,e]})};export{m as CalendarModule};
