@@ -38,7 +38,7 @@ export class reminderEffects {
         )
     );
 
-    deletePet$ = createEffect(() =>
+    deleteReminder$ = createEffect(() =>
         this.actions$.pipe(
             ofType(ReminderActions.delete
             ),

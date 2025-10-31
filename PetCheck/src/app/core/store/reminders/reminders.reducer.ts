@@ -42,8 +42,18 @@ export const reminderReducer = createReducer(
     })),
 
     //DELETE
+    on(ReminderActions.delete, ( state ) => ({ 
+        ...state, 
+        loading: true,
+    })),
+    on(ReminderActions.deleteFailure, ( state, { error }) => ({ 
+        ...state, 
+        loading: false,
+        error: error,
+    })),
     on(ReminderActions.deleteSuccess, ( state, { appointmentId }) => ({ 
         ...state, 
+        loading: false,
         reminders: state.reminders.filter(p => p.id !== appointmentId),
     })),
 

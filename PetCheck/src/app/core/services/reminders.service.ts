@@ -33,7 +33,7 @@ export class ReminderService {
         const user = this.auth.currentUser;
         if(!user) throw new Error('Currently not logged in');
 
-        const petDoc = doc(this.firestore, `users/${user.uid}/pets/${appointmentId}`);
+        const petDoc = doc(this.firestore, `users/${user.uid}/reminders/${appointmentId}`);
         await deleteDoc(petDoc);
     }   
 }

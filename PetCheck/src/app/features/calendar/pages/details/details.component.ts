@@ -7,13 +7,14 @@ import { filter, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Reminder } from '../../../../core/model/reminder';
-import { selectReminderById } from '../../../../core/store/reminders/reminder.selectors';
+import { selectReminderById, selectRemindersLoading } from '../../../../core/store/reminders/reminder.selectors';
 import { AsyncPipe } from '@angular/common';
 import { selectPetById } from '../../../../core/store/pets/pets.selectors';
 import { Pet } from '../../../../core/model/pet';
 import { MatIcon } from "@angular/material/icon";
 import { ReminderActions } from '../../../../core/store/reminders/reminders.actions';
 import { Router } from '@angular/router';
+import { MatProgressSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-details',
@@ -23,12 +24,14 @@ import { Router } from '@angular/router';
     MatDividerModule,
     MatCardModule,
     MatButtonModule,
+    MatProgressSpinner,
     MatIcon
 ],
   templateUrl: './details.component.html',
   styleUrl: './details.component.css'
 })
 export class DetailsComponent implements OnInit{
+  loading$!: Observable<boolean>;
   reminder$!: Observable<Reminder | undefined>;
   assignedPet$!: Observable<Pet | undefined>;
   reminderId: string = '';
@@ -37,6 +40,8 @@ export class DetailsComponent implements OnInit{
 
   ngOnInit(): void {
     this.reminderId = this.route.snapshot.paramMap.get('id')!;
+
+    this.loading$ = this.store.select(selectRemindersLoading);
     
     this.reminder$ = this.store.select(selectReminderById(this.reminderId));
     this.assignedPet$ = this.reminder$.pipe(

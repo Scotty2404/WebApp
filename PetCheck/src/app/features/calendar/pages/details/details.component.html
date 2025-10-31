@@ -1,11 +1,12 @@
-    <section class="pet-detail">
-        <app-title
-            [pageTitle]="'Details'"
-            routerLink="/calendar"
-            [additionalButton]="'/calendar/edit/' + ((reminder$ | async)?.id ?? '')"
-            iconSlot="edit">
-        </app-title>
-        <mat-divider></mat-divider>
+<section class="pet-detail">
+    <app-title
+        [pageTitle]="'Details'"
+        routerLink="/calendar"
+        [additionalButton]="'/calendar/edit/' + ((reminder$ | async)?.id ?? '')"
+        iconSlot="edit">
+    </app-title>
+    <mat-divider></mat-divider>
+    @if(!(loading$ | async)) {
         <mat-card>
             <mat-card-title> {{ (reminder$ | async)?.title }} </mat-card-title>
             <mat-card-subtitle> {{ (reminder$ | async)?.startTime?.toDate()?.toLocaleDateString() }} </mat-card-subtitle>
@@ -22,4 +23,9 @@
                     </button>
             </mat-card-content>
         </mat-card>
-    </section>  
+    } 
+    @else {
+        <mat-progress-spinner></mat-progress-spinner>
+    }
+
+</section>  
