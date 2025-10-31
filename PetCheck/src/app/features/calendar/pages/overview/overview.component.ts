@@ -7,6 +7,7 @@ import { selectAllPets } from '../../../../core/store/pets/pets.selectors';
 import { AsyncPipe } from '@angular/common';
 import { selectAllReminders } from '../../../../core/store/reminders/reminder.selectors';
 import { MatDivider } from "@angular/material/divider";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-overview',
@@ -27,7 +28,7 @@ export class OverviewComponent implements OnInit {
   readonly CalendarView = CalendarView;
   viewDate = new Date();
   
-  constructor(private store: Store) {}
+  constructor(private store: Store, private router: Router) {}
 
   ngOnInit(): void {
     const pets$ = this.store.select(selectAllPets);
@@ -38,6 +39,7 @@ export class OverviewComponent implements OnInit {
         const petEvents: CalendarEvent[] = pets.map(pet => ({
           start: pet.birthDate?.toDate(),
           title: `${pet.name}'s Geburtstag!`,
+          meta: { id: pet.id  },
         }));
 
         const reminderEvents: CalendarEvent[] = reminders.map(reminder => {
@@ -48,6 +50,7 @@ export class OverviewComponent implements OnInit {
             start: reminder.startTime?.toDate(),
             end: reminder.endTime?.toDate(),
             title: `${reminder.title} (${pet?.name})`,
+            meta: { id: reminder.id  },
           }
         });
 
@@ -60,4 +63,12 @@ export class OverviewComponent implements OnInit {
     this.viewDate = day.date;
     this.activeDayIsOpen = true;
   }
+
+  handleEventClick(event: CalendarEvent): void {
+    if (event.meta && event.meta.id) {
+      this.router.navigate(['/calendar/details', event.meta.id]);
+    } else {
+      console.warn('Event hat keine ID in meta:', event);
+    }
+  }   
 }

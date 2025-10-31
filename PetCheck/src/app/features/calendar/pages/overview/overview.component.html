@@ -13,6 +13,7 @@
             [viewDate]="viewDate" 
             [events]="(events$ | async) ?? []" 
             (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="handleEventClick($event.event)"
         />
     </div>
 
@@ -23,6 +24,7 @@
             <mwl-calendar-day-view
                 [viewDate]="viewDate"
                 [events]="(events$ | async) ?? []"
+                (eventClicked)="handleEventClick($event.event)"
             />
         </div>        
     }
