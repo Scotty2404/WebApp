@@ -12,3 +12,17 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     --text-primary: #1E1E1E;
     --text-secondary: #555555;
 }
+
+
+.cal-month-view .cal-day-cell {
+    min-height: 8vh !important;
+    max-height: 10vh;
+}
+
+.cal-month-view .cal-cell-top {
+    min-height: 5vh;
+}
+
+.cal-month-view .cal-day-badge {
+    margin-left: 5px;
+}

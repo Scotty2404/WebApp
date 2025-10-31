@@ -7,7 +7,7 @@ import { AddReminderComponent } from './pages/add-reminder/add-reminder.componen
 const routes: Routes = [
   { path: '', redirectTo: 'overview', pathMatch: 'full' },
   { path: 'overview', component: OverviewComponent },
-  { path: 'details', component: DetailsComponent },
+  { path: 'details/:date', component: DetailsComponent },
   { path: 'add', component: AddReminderComponent }
 ];
 
