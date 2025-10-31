@@ -43,9 +43,7 @@ export class OverviewComponent implements OnInit {
         }));
 
         const reminderEvents: CalendarEvent[] = reminders.map(reminder => {
-          
           const pet = pets.find(p => p.id === reminder.petId);
-          
           return {
             start: reminder.startTime?.toDate(),
             end: reminder.endTime?.toDate(),
@@ -54,7 +52,12 @@ export class OverviewComponent implements OnInit {
           }
         });
 
-        return [...petEvents, ...reminderEvents];
+        const allEvents = [...petEvents, ...reminderEvents];
+        const uniqueEvents = Array.from(
+          new Map(allEvents.map(e => [e.meta.id, e])).values()
+        );
+
+        return uniqueEvents;
       })
     );
   }
@@ -66,7 +69,11 @@ export class OverviewComponent implements OnInit {
 
   handleEventClick(event: CalendarEvent): void {
     if (event.meta && event.meta.id) {
-      this.router.navigate(['/calendar/details', event.meta.id]);
+      if(event.title.includes('s Geburtstag!')) {
+        this.router.navigate(['/dashboard/details', event.meta.id]);
+      } else {
+        this.router.navigate(['/calendar/details', event.meta.id]);
+      }
     } else {
       console.warn('Event hat keine ID in meta:', event);
     }
