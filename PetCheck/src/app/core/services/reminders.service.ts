@@ -25,7 +25,7 @@ export class ReminderService {
         const user = this.auth.currentUser;
         if(!user) throw new Error('Currently not logged in');
 
-        const reminderDoc = doc(this.firestore, `users/${user.uid}/reminders/${appointment.id}}`);
+        const reminderDoc = doc(this.firestore, `users/${user.uid}/reminders/${appointment.id}`);
         await updateDoc(reminderDoc, { ...appointment });
     }
 

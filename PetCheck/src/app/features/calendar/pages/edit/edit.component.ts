@@ -87,6 +87,7 @@ export class EditComponent implements OnInit {
 
     // format data to be saved
     const reminderToSave = {
+      id: this.reminderId,
       petId: formValue.petId,
       title: formValue.title,
       startTime: Timestamp.fromDate(start),
@@ -96,11 +97,5 @@ export class EditComponent implements OnInit {
 
     this.store.dispatch(ReminderActions.update({ appointment: reminderToSave }));
     this.router.navigate(['/calendar']);
-  }
-
-  toTimeString(timestamp: any): string {
-    if (!timestamp) return '';
-    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-    return date.toTimeString().slice(0, 5); // "HH:mm"
   }
 }

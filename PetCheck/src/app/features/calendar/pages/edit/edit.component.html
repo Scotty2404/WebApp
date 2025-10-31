@@ -1,6 +1,6 @@
 <app-title
   pageTitle="Termin bearbeiten"
-  routerLink="/calendar"
+  [routerLink]="'/calendar/details/' + this.reminderId"
 ></app-title>
 
 <mat-card class="reminder-form-card">
