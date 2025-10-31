@@ -9,6 +9,16 @@ export const ReminderActions = createActionGroup({
         'Add Success': props<{ appointment:Reminder }>(),
         'Add Failure': props<{ error: string }>(),
 
+        //Update
+        'Update': props<{ appointment: Reminder}>(),
+        'Update Success': props<{ appointment:Reminder }>(),
+        'Update Failure': props<{ error: string }>(), 
+
+        //Delete
+        'Delete': props<{ appointmentId: string}>(),
+        'Delete Success': props<{ appointmentId:string }>(),
+        'Delete Failure': props<{ error: string }>(), 
+
         //Load Reminders
         'Load': props<{userId: string}>(),
         'LoadSuccess': props<{ appointments: Reminder[] }>(),

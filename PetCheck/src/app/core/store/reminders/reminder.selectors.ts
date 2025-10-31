@@ -8,6 +8,12 @@ export const selectAllReminders = createSelector(
     s => s.reminders
 );
 
+export const selectReminderById = (id: string) =>
+    createSelector(
+        selectReminderState, 
+        s => s.reminders.find(r => r.id === id)
+);
+
 export const selectRemindersLoading = createSelector(
     selectReminderState,
     s => s.loading

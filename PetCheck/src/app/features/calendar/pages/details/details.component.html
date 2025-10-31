@@ -1,7 +1,25 @@
     <section class="pet-detail">
         <app-title
             [pageTitle]="'Details'"
-            routerLink="/calendar">
+            routerLink="/calendar"
+            [additionalButton]="'/calendar/edit/' + ((reminder$ | async)?.id ?? '')"
+            iconSlot="edit">
         </app-title>
         <mat-divider></mat-divider>
+        <mat-card>
+            <mat-card-title> {{ (reminder$ | async)?.title }} </mat-card-title>
+            <mat-card-subtitle> {{ (reminder$ | async)?.startTime?.toDate()?.toLocaleDateString() }} </mat-card-subtitle>
+            <mat-card-content>
+                <p><strong>Haustier: </strong> <button matButton> {{ (assignedPet$ | async)?.name }} </button></p>
+                <p><strong>Beginn: </strong> {{ (reminder$ | async)?.startTime?.toDate()?.toLocaleTimeString() }} </p>
+                <p><strong>Ende: </strong> {{ (reminder$ | async)?.endTime?.toDate()?.toLocaleTimeString() }} </p>
+                    <button
+                        mat-icon-button
+                        color="warn"
+                        (click)="onDelete()"
+                        aria-label="Termin löschen">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+            </mat-card-content>
+        </mat-card>
     </section>  

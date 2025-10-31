@@ -1,55 +1,51 @@
 <app-title
-  pageTitle="Neuen Termin anlegen"
+  pageTitle="Termin bearbeiten"
   routerLink="/calendar"
 ></app-title>
 
 <mat-card class="reminder-form-card">
   <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()" class="reminder-form">
-    
-    <!--Title-->
+
+    <!-- Title -->
     <mat-form-field appearance="outline">
       <mat-label>Titel</mat-label>
-      <input matInput formControlName="title"/>
+      <input matInput formControlName="title" />
     </mat-form-field>
 
-    <!--Assigned Pet-->
+    <!-- Assigned Pet -->
     <mat-form-field appearance="outline">
       <mat-label>Zugehöriges Haustier</mat-label>
       <mat-select formControlName="petId">
         @for (pet of (pets$ | async); track pet.id)
         {
-          <mat-option
-            [value]="pet.id">
-            {{ pet.name }}
-          </mat-option>          
+          <mat-option [value]="pet.id">{{ pet.name }}</mat-option>
         }
- 
       </mat-select>
     </mat-form-field>
 
-    <!--Start Date-->
+    <!-- Start Date -->
     <mat-form-field appearance="outline">
       <mat-label>Datum</mat-label>
-      <input matInput formControlName="startDate" [matDatepicker]="picker"/>
+      <input matInput formControlName="startDate" [matDatepicker]="picker" />
       <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <!--Start Time-->
+    <!-- Start Time -->
     <mat-form-field appearance="outline">
       <mat-label>Startzeit</mat-label>
       <input matInput type="time" formControlName="startTime" />
     </mat-form-field>
 
-    <!--End Time (optional)-->
+    <!-- End Time -->
     <mat-form-field appearance="outline">
       <mat-label>Endzeit</mat-label>
       <input matInput type="time" formControlName="endTime" />
     </mat-form-field>
 
     <div class="form-actions">
-      <button matButton="elevated" color="primary" type="submit" [disabled]="reminderForm.invalid">
-        Termin
+      <button mat-flat-button color="primary" type="submit" [disabled]="reminderForm.invalid">
+        Änderungen speichern
       </button>
     </div>
 

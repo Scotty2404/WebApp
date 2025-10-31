@@ -11,7 +11,7 @@ export class PetService {
 
     async addPet(pet: Omit<Pet, 'id' | 'ownerId'>) {
         const user = this.auth.currentUser;
-        if(!user) throw new Error('Currently not lodded in');
+        if(!user) throw new Error('Currently not logged in');
 
         const ref = collection(this.firestore, `users/${user.uid}/pets`);
         await addDoc(ref, { ...pet, ownerId: user.uid });
@@ -19,7 +19,7 @@ export class PetService {
 
     async updatePet(pet: Pet) {
         const user = this.auth.currentUser;
-        if(!user) throw new Error('Currently not lodded in');
+        if(!user) throw new Error('Currently not logged in');
 
         const petDoc = doc(this.firestore, `users/${user.uid}/pets/${pet.id}`);
         await updateDoc(petDoc, { ...pet });
@@ -27,7 +27,7 @@ export class PetService {
 
     async deletePet(petId: string) {
         const user = this.auth.currentUser;
-        if(!user) throw new Error('Currently not lodded in');
+        if(!user) throw new Error('Currently not logged in');
 
         const petDoc = doc(this.firestore, `users/${user.uid}/pets/${petId}`);
         await deleteDoc(petDoc);

@@ -26,6 +26,31 @@ export class reminderEffects {
         )
     );
 
+    updateReminder$ = createEffect(() => 
+        this.actions$.pipe(
+            ofType(ReminderActions.update),
+            mergeMap( action => 
+                from(this.ReminderService.updateReminder(action.appointment)).pipe(
+                    map(() => ReminderActions.updateSuccess({ appointment: action.appointment})),
+                    catchError(error => of (ReminderActions.updateFailure({ error })))
+                )
+            )
+        )
+    );
+
+    deletePet$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(ReminderActions.delete
+            ),
+            mergeMap(action =>
+                from(this.ReminderService.deleteReminder(action.appointmentId)).pipe(
+                    map(() => ReminderActions.deleteSuccess({ appointmentId: action.appointmentId})),
+                    catchError(error => of(ReminderActions.deleteFailure({ error })))
+                )
+            )
+        )
+    );
+
     load$ = createEffect(() =>
     this.actions$.pipe(
         ofType(ReminderActions.load),

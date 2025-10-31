@@ -16,17 +16,38 @@ export const initialState: ReminderState = {
 export const reminderReducer = createReducer(
     initialState,
 
-    on(ReminderActions.addSuccess, (state, { appointment }) => ({
-        ...state,
-        loading: false,
-        reminders: [...state.reminders, appointment],
-    })),
+    //ADD
+    on(ReminderActions.addSuccess, (state, { appointment }) => {
+        const reminders = state.reminders ?? [];
+        const exists = reminders.some(r => r.id === appointment.id);
+
+        return exists
+            ? { ...state, loading: false }
+            : {
+                ...state,
+                loading: false,
+                reminders: [...reminders, appointment],
+            };
+    }),
     on(ReminderActions.addFailure, (state, { error }) => ({
         ...state,
         loading: false,
         error
     })),
 
+    //UPDATE
+    on(ReminderActions.updateSuccess, ( state, { appointment }) => ({
+        ...state,
+        reminders: state.reminders.map(r => (r.id === appointment.id ? appointment : r)),
+    })),
+
+    //DELETE
+    on(ReminderActions.deleteSuccess, ( state, { appointmentId }) => ({ 
+        ...state, 
+        reminders: state.reminders.filter(p => p.id !== appointmentId),
+    })),
+
+    //LOAD
     on(ReminderActions.load, state => ({
         ...state,
         loading: true,
