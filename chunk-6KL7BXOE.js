@@ -1,1 +1,0 @@
-import{fa as e}from"./chunk-FBMEHAWD.js";import{$ as t,Ia as i,mc as r}from"./chunk-QHXVKW2R.js";var m=class o{static \u0275fac=function(n){return new(n||o)};static \u0275mod=i({type:o});static \u0275inj=t({imports:[r,e]})};export{m as CalendarModule};
