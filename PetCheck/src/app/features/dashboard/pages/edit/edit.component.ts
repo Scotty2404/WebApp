@@ -69,13 +69,14 @@ export class EditComponent implements OnInit {
     const newPet = this.petForm.value;
 
     const petToSave: Pet = {
+      id: this.petId,
       name: newPet.name,
       species: newPet.species,
       breed: newPet.breed,
       birthDate: Timestamp.fromDate(newPet.birthDate),
     }
 
-    this.store.dispatch(PetActions.updatePet({ pet: newPet }));
+    this.store.dispatch(PetActions.updatePet({ pet: petToSave }));
 
     this.router.navigate(['/dashboard']);
   }
